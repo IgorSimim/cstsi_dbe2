@@ -12,5 +12,5 @@ IMC::calc($pessoa);
 
 IMC::classifica($pessoa);
 
-echo "IMC da $pessoa->nome eh ".$pessoa->getImc();
+echo "IMC da $pessoa->nome eh ".number_format($pessoa->getImc(), 2);
 
