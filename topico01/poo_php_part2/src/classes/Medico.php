@@ -3,7 +3,6 @@ namespace Gvg\Dbe2\classes;
 
 use Exception;
 use Gvg\Dbe2\classes\Abstracts\Pessoa;
-use Gvg\Dbe2\classes\Paciente;
 use Gvg\Dbe2\interfaces\IMC;
 
 class Medico extends Pessoa implements IMC{
@@ -45,45 +44,6 @@ class Medico extends Pessoa implements IMC{
 	{
 		if(is_numeric($this->imc))
 			echo "\nO IMC do Médico $this->nome é: " . number_format($this->imc, 2) . "\n";
-	}
-
-	public function calc(Paciente $paciente): float
-	{
-		if ($paciente->peso === null || $paciente->altura === null) {
-			throw new Exception("Peso e altura do paciente devem estar definidos para calcular o IMC!");
-		}
-		
-		if ($paciente->peso <= 0 || $paciente->altura <= 0) {
-			throw new Exception("Peso e altura devem ser valores positivos!");
-		}
-		
-		$imc = $paciente->peso / ($paciente->altura ** 2);
-		$paciente->setImc($imc);
-		
-		return $imc;
-	}
-
-	public function classifica(Paciente $paciente): string
-	{
-		$imc = $paciente->getImc();
-		
-		if ($imc === null) {
-			$imc = $this->calc($paciente);
-		}
-		
-		if ($imc < 18.5) {
-			return "Abaixo do peso";
-		} elseif ($imc >= 18.5 && $imc < 25) {
-			return "Peso normal";
-		} elseif ($imc >= 25 && $imc < 30) {
-			return "Sobrepeso";
-		} elseif ($imc >= 30 && $imc < 35) {
-			return "Obesidade grau I";
-		} elseif ($imc >= 35 && $imc < 40) {
-			return "Obesidade grau II";
-		} else {
-			return "Obesidade grau III";
-		}
 	}
 
 	public function __toString()
